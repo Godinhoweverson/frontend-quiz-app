@@ -14,6 +14,7 @@ body{
    font-family: "Rubik", sans-serif;
    font-size: 12px;
    color: #626C7F;
+   margin-top: 97px;
 }
 
 .flex-box{
@@ -25,7 +26,7 @@ body{
 main{
     width: 80.56%;
     height: 72.5%;
-    flex-direction: column;
+
 }
 
 #change-theme{
@@ -34,6 +35,10 @@ main{
     align-items: center;
     justify-content: flex-end;
     flex-direction: row;
+    margin-bottom: 97px;
+}
+.toggle-btn{
+  margin: 8px;
 }
 
 .switch {
@@ -115,7 +120,7 @@ h1 span{
 }
 
 #pick-subject{
-    justify-content: space-between!important;
+    justify-content: flex-start!important;
     flex-direction:column;
     width: 50%;
     height: 100%;
@@ -129,14 +134,16 @@ h1 span{
     border-radius: 24px;
     background-color: #fff;
     padding: 20px;
+    margin-bottom: 24px;
 }
 
-.pick p{
+.pick a{
   margin-left: 32px;
   color: #313E51;
   font-size: 28px;
   line-height: 100%;
   font-weight: 600;
+  text-decoration: none;
 }
 
 @media screen and (max-width: 1024px) {
@@ -145,10 +152,16 @@ h1 span{
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="438" height="531" fill="none" viewBox="0 0 438 531"><circle cx="-50.5" cy="42.5" r="416.5" stroke="%23EDF1F9" stroke-width="144" /></svg>');
     background-repeat: no-repeat;
     background-size: 50% 60%;
+    margin-top: 54px;
   }
 
   main{
     height: 100%;
+  }
+
+  #change-theme{
+    height: 13.9%;
+    margin-bottom: 54px;
   }
   #box-content {
     flex-direction: column;
@@ -163,5 +176,25 @@ h1 span{
 
   .pick{
     height: 80px;
+  }
+}
+
+
+@media screen and (max-width: 540px) {
+  body{
+    background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="375" height="812" fill="none" viewBox="0 0 375 812"%3E%3Ccircle cx="-113.5" cy="323.5" r="416.5" stroke="%23EDF1F9" stroke-width="144"/%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    margin-top: 26px;
+    font-size: 14px;
+  }
+
+  
+  #change-theme{
+    margin-bottom: 26px;
+  }
+
+  h1{
+    font-size: 40px;
   }
 }
