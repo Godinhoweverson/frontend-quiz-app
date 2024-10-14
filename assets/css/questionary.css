@@ -127,6 +127,25 @@ h1 {
   width: 82.44%;
 }
 
+.range-bar {
+  width: 82.44%;
+}
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none; 
+  width: 100%;
+  outline: none;
+  height: 13px;
+  border: 3px solid #fff;
+  border-radius: 16px;
+  background: linear-gradient(to right, #A729F5 0%, #fff 0%);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
 #pick-subject{
   width: 50%;
   flex-direction: column;
