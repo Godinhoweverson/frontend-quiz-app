@@ -13,6 +13,7 @@ body{
    min-height: 100vh;
    font-family: "Rubik", sans-serif;
    margin-top: 97px;
+   color: #313E51;
 }
 
 .flex-box{
@@ -130,14 +131,14 @@ main{
   font-size: 12px;
   line-height: 150%;
   font-style: italic;
-  color: #626C7F;
+  color: #626C7F !important;
 }
 
 .questions h1 {
   margin-top: 38px;
   font-size: 36px;
   line-height: 100%;
-  color: #313E51;
+
   height: 215px;
 }
 
@@ -195,7 +196,6 @@ input[type="range"]::-webkit-slider-thumb {
 .answers p{
   font-size: 28px;
   line-height: 100%;
-  color: #313E51;
 }
 .btn{
   background-color: #A729F5;

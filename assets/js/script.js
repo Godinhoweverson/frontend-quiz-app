@@ -15,14 +15,14 @@ const range = () =>{
 
 range()
 
-
-
 // Get the subject selected and set on localStorage
 const btnValue = () =>{
   pickSubjectBtn.forEach((el) =>{
     el.addEventListener('click',()=>{
       let valueSubject = el.textContent
       localStorage.setItem('selectedSubject', valueSubject);
+      let storageRemove = true
+      localStorageRemove(storageRemove)
     })
   })
 }
@@ -30,11 +30,17 @@ btnValue()
 
 // Get the Subject selected from localStorage
 const selectedSubject = localStorage.getItem('selectedSubject');
-if(selectedSubject){
-  localStorage.removeItem('selectedSubject');
+
+const localStorageRemove = (){
+  if(selectedSubject){
+    if(slider){
+    localStorage.removeItem('selectedSubject');
+    }
+  }
 }
 
-// . Get the data from Json 
+
+    // . Get the data from Json 
 let data;
 fetch('./data.json')
   .then((res) => res.json())
@@ -49,14 +55,16 @@ const quizzes = () =>{
     for(let i = 0; i < 4; i++){
       if(items[1][i].title === selectedSubject){
         title.innerHTML = items[1][i].title
-        console.log(items[1][i].icon)
         const img = document.createElement('img')
         img.src = `${items[1][i].icon}`
-        iconSubject.appendChild(img)
+        img.style = 'width:56px; heigth:56px;'
+        iconSubject.prepend(img)
       }
     }
   }
 }
+
+
 
 // Create a loop to iterate on 4 properties and check if is true or false
 // if is true print the title, icon, and question
