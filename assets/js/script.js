@@ -1,11 +1,15 @@
 const pickSubjectBtn = document.querySelectorAll('.pick a');
 const titleDisplay = document.querySelector('.question-type p');
 const iconSubject = document.querySelector('.question-type');
+const questionNumber = document.querySelector('.questionNumber');
 const questionsHeanding = document.querySelector('.questions h1');
 const btnOptionsParagraph = document.querySelectorAll('.answers p');
 const btnOptions = document.querySelectorAll('.answers');
 const submitAnswer = document.querySelector('#submit-answer');
+const nextAnswer = document.querySelector('#next-answer');
 const multChoice = document.querySelector('#mult-choice');
+
+console.log(questionNumber)
 
 let correctAnswer;
 let selectedAnswer = null; 
@@ -21,14 +25,12 @@ const increementCount =() =>{
 const range = () =>{
   const slider = document.getElementById('range');
   if(slider){
-    const tempSliderValue = getCount();
+    const tempSliderValue = getCount() + 1;
     const max = slider.max; 
     const progress = (tempSliderValue / max) * 100; 
     slider.style.background = `linear-gradient(to right, #A729F5 ${progress}%, #fff ${progress}%)`;
   }
 }
-
-range()
 
 // Get the subject selected and set on localStorage
 const btnValue = () =>{
@@ -59,6 +61,7 @@ fetch('./data.json')
 
 const quizzes = () =>{
   // Reset the title display and icon
+ 
   titleDisplay.innerHTML = '';
   iconSubject.innerHTML = ''; // Clear any existing icons
   correctAnswer = null;
@@ -112,7 +115,6 @@ const getValueBtnOptions = (answer) => {
 // This If statement checks if the submitAnswer element exists 
 // to avoid errors when trying to add an event listener to a null element
 if(submitAnswer){
-
     // Submit the answer
   const submitAnswerBtn = () => {
     submitAnswer.addEventListener('click', () => {
@@ -160,15 +162,10 @@ if(submitAnswer){
   submitAnswerBtn()
 }
 
-
 const answerIsCorrect = (correctAnswer, selectedAnswer, elementSelected) => {
   if(correctAnswer.answer === selectedAnswer){
     // CORRECT ANSWER
-    console.log(selectedAnswer)
-    const removeSvg = document.querySelector('#removeSvg');
-    if(removeSvg){
-      removeSvg.remove();
-    }
+ 
     elementSelected.parentNode.style = 'border: 2px solid #26D782; justify-content:space-between;';
     elementSelected.previousElementSibling.style.backgroundColor = '#26D782';
 
@@ -183,29 +180,13 @@ const answerIsCorrect = (correctAnswer, selectedAnswer, elementSelected) => {
     }
     elementSelected.parentNode.appendChild(div)
 
-    // The Submit answer will change to Next Question
-    submitAnswer.textContent = 'Next Question'
-
     btnNextQuestion()
 
     // The function to incremment the count variable to use on the logic to go two next questio
     increementCount() 
     
-    // Reset All values for next question
-    if(removeSvg){ 
-      const removeSvg = document.querySelector('#removeSvg');
-      removeSvg.remove();
-      elementSelected.parentNode.style = '';
-      elementSelected.previousElementSibling.style.backgroundColor = '';
-      elementSelected.previousElementSibling.style.color = '#626C7F';
-    }
   }else{
      // INCORRECT ANSWER
-
-    const removeSvg = document.querySelector('#removeSvg');
-    if(removeSvg){
-      removeSvg.remove();
-    }
     elementSelected.parentNode.style = 'border: 2px solid #EE5454; justify-content:space-between;';
     elementSelected.previousElementSibling.style.backgroundColor = '#EE5454';
     const div = document.createElement('div');
@@ -220,34 +201,42 @@ const answerIsCorrect = (correctAnswer, selectedAnswer, elementSelected) => {
     }
     elementSelected.parentNode.appendChild(div)
     
-     // The Submit answer will change to Next Question
-     submitAnswer.textContent = 'Next Question'
-
      btnNextQuestion()
  
      // The function to incremment the count variable to use on the logic to go two next questio
      increementCount() 
-     
-     // Reset All values for next question
-     if(removeSvg){ 
-       const removeSvg = document.querySelector('#removeSvg');
-       removeSvg.remove();
-       elementSelected.parentNode.style = '';
-       elementSelected.previousElementSibling.style.backgroundColor = '';
-       elementSelected.previousElementSibling.style.color = '#626C7F';
-     }
   }
-}
+ }
 
 const btnNextQuestion = () =>{
-  submitAnswer.addEventListener('click', () => {
+  if(getCount() < 9){
+    console.log(getCount())
+    submitAnswer.style = 'display:none;'
+    nextAnswer.style = 'display:flex;'
+    nextAnswer.addEventListener('click', () => {
+    const removeSvg = document.querySelector('#removeSvg');
+      // Reset All values for next question
+      elementSelected.parentNode.style = '';
+      elementSelected.previousElementSibling.style.backgroundColor = '';
+      elementSelected.previousElementSibling.style.color = '#626C7F';
+    if(removeSvg){
+      removeSvg.remove();
+    }
+    questionNumber.innerHTML = `${getCount() + 1}`;
     quizzes()
+    range()
+    submitAnswer.style = 'display:flex;'
+    nextAnswer.style = 'display:none;'
   });
+  }else{
+    console.log('DONE')
+  }
+ 
 }
 function getCount() {
   return count;
 }
 
 
-// when click on next question have to change the question and options
-// Update Question 1 of 10 based in wich question.
+// when click on next question have to change the question and optionsok
+// Update Question 1 of 10 based in wich question.ok

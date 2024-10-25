@@ -36,13 +36,13 @@
     <section id="box-content" class="flex-box">
       <div id="questionary-box" class="flex-box">
         <div class="questions">
-            <p>Question 6 of 10</p>
+            <p>Question<span class="questionNumber">1</span>of 10</p>
             <h1>
                 Which of these color contrast ratios defines the minimum WCAG 2.1 Level AA requirement for normal text?
             </h1>
         </div>
         <div class="range-bar"> 
-            <input type="range" min="1" max="6" value="1" id="range">
+            <input type="range" min="1" max="10" value="1" id="range">
         </div>
       </div>
       <!-- PICKUP Answer -->
@@ -63,8 +63,11 @@
             <div class="answer-options flex-box">D</div>
             <p>5:1</p>
         </button>
-        <button class="btn flex-box" id="submit-answer">
+        <button class="btn" id="submit-answer">
             Submit Answer
+        </button>
+        <button class="btn" id="next-answer">
+            Next Question
         </button>
       </div>
     </section>

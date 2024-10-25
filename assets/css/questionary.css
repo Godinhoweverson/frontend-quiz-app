@@ -197,7 +197,17 @@ input[type="range"]::-webkit-slider-thumb {
   font-size: 28px;
   line-height: 100%;
 }
+
+#submit-answer{
+  display: flex;
+}
+
+#next-answer{
+  display: none;
+}
 .btn{
+  justify-content: center;
+  align-items: center;
   background-color: #A729F5;
   align-items: center;
   color: #fff;
@@ -208,6 +218,8 @@ input[type="range"]::-webkit-slider-thumb {
 .btn:hover{
   opacity: 50%;
 }
+
+
 
 @media screen and (max-width: 1024px) {
 
