@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/assets/css/questionary.css">
+    <link rel="stylesheet" href="/assets/css/quizCompleted.css">
     <title>Questionary</title>
 </head>
 <body class="flex-box">
@@ -34,40 +34,18 @@
         </div>
     </section>
     <section id="box-content" class="flex-box">
-      <div id="questionary-box" class="flex-box">
-        <div class="questions">
-            <p>Question <span class="questionNumber">1</span> of 10</p>
-            <h1>
-                Which of these color contrast ratios defines the minimum WCAG 2.1 Level AA requirement for normal text?
-            </h1>
-        </div>
-        <div class="range-bar"> 
-            <input type="range" min="1" max="10" value="1" id="range">
-        </div>
+      <div id="q-completed" class="flex-box">
+        <h1>Quiz completed <br><span>You scored...</span></h1>
       </div>
-      <!-- PICKUP Answer -->
-      <div id="mult-choice" class="flex-box">
-        <button class="answers flex-box" id="btn-a">
-            <div class="answer-options flex-box">A</div>
-            <p>4.5:1</p>
-        </button>
-        <button class="answers flex-box" id="btn-b">
-            <div class="answer-options flex-box">B</div>
-            <p>3:1</p>
-        </button>
-        <button class="answers flex-box" id="btn-c">
-            <div class="answer-options flex-box">C</div>
-            <p>2.5:1</p>
-        </button>
-        <button class="answers flex-box" id="btn-d">
-            <div class="answer-options flex-box">D</div>
-            <p>5:1</p>
-        </button>
-        <button class="btn" id="submit-answer">
-            Submit Answer
-        </button>
-        <button class="btn" id="next-answer">
-            Next Question
+      <!-- SCORE-->
+      <div id="score" class="flex-box">
+        <div id="r-score" class="flex-box">
+            <div class="icon">Accessibity</div>
+            <div class="score">8</div>
+            <div class="outOf">Out of 10</div>
+        </div>
+        <button class="btn" id="play-again">
+            Play again
         </button>
       </div>
     </section>

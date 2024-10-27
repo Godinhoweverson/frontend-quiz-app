@@ -9,8 +9,6 @@ const submitAnswer = document.querySelector('#submit-answer');
 const nextAnswer = document.querySelector('#next-answer');
 const multChoice = document.querySelector('#mult-choice');
 
-console.log(questionNumber)
-
 let correctAnswer;
 let selectedAnswer = null; 
 let elementSelected = null;
@@ -201,10 +199,10 @@ const answerIsCorrect = (correctAnswer, selectedAnswer, elementSelected) => {
     }
     elementSelected.parentNode.appendChild(div)
     
-     btnNextQuestion()
- 
-     // The function to incremment the count variable to use on the logic to go two next questio
-     increementCount() 
+    btnNextQuestion()
+
+    // The function to incremment the count variable to use on the logic to go two next questio
+    increementCount() 
   }
  }
 
@@ -229,6 +227,7 @@ const btnNextQuestion = () =>{
     nextAnswer.style = 'display:none;'
   });
   }else{
+    window.location.replace("/quizCompleted.html");
     console.log('DONE')
   }
  
@@ -240,3 +239,8 @@ function getCount() {
 
 // when click on next question have to change the question and optionsok
 // Update Question 1 of 10 based in wich question.ok
+
+
+// Space on question range ok
+
+// create a score page//
