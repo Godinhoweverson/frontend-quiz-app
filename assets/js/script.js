@@ -7,17 +7,23 @@ const btnOptionsParagraph = document.querySelectorAll('.answers p');
 const btnOptions = document.querySelectorAll('.answers');
 const submitAnswer = document.querySelector('#submit-answer');
 const nextAnswer = document.querySelector('#next-answer');
+const scorebtn = document.querySelector('#score-btn');
 const multChoice = document.querySelector('#mult-choice');
-
+const totalScore = document.querySelector('.total-score');
+const iconQuizCompleted = document.querySelector('.icon');
 let correctAnswer;
 let selectedAnswer = null; 
 let elementSelected = null;
 let count = 0;
+let correctAnswersCount  = 0;
 
 const increementCount =() =>{
   count++
 } 
 
+const increementCorrectAnswer = () =>{
+  countCorrect++
+}
 
 // SLIDER
 const range = () =>{
@@ -54,6 +60,7 @@ fetch('./data.json')
   .then((json) => {
     data = json;
     quizzes()
+    quizCompleted(icon)
 })
 .catch((error) => console.error('Error fetching data:', error));
 
@@ -89,6 +96,9 @@ const displayQuestions = (questions) => {
 
 // Get value from Answer selected
 const getValueBtnOptions = (answer) => {
+  // RESET ALL VALUES
+  selectedAnswer = '';
+  elementSelected = '';
   answer.forEach(el => {
     el.addEventListener('click', () => {
 
@@ -98,7 +108,7 @@ const getValueBtnOptions = (answer) => {
         btn.previousElementSibling.style.backgroundColor = ''; // Reset background
         btn.previousElementSibling.style.color = ''; // Reset text color
       });
-
+      
       elementSelected = el; // Set the selected element
       selectedAnswer = el.textContent; // Set the selected answer
 
@@ -183,6 +193,9 @@ const answerIsCorrect = (correctAnswer, selectedAnswer, elementSelected) => {
     // The function to incremment the count variable to use on the logic to go two next questio
     increementCount() 
     
+    correctAnswersCount++;
+    localStorage.setItem('totalCorrect', correctAnswersCount);
+ 
   }else{
      // INCORRECT ANSWER
     elementSelected.parentNode.style = 'border: 2px solid #EE5454; justify-content:space-between;';
@@ -208,15 +221,21 @@ const answerIsCorrect = (correctAnswer, selectedAnswer, elementSelected) => {
 
 const btnNextQuestion = () =>{
   if(getCount() < 9){
-    console.log(getCount())
+   
     submitAnswer.style = 'display:none;'
     nextAnswer.style = 'display:flex;'
     nextAnswer.addEventListener('click', () => {
     const removeSvg = document.querySelector('#removeSvg');
-      // Reset All values for next question
-      elementSelected.parentNode.style = '';
-      elementSelected.previousElementSibling.style.backgroundColor = '';
-      elementSelected.previousElementSibling.style.color = '#626C7F';
+    if (elementSelected) {
+      if (elementSelected.parentNode) {
+        elementSelected.parentNode.style.border = ''; // Reset border
+        elementSelected.parentNode.style.justifyContent = 'flex-start'; // Reset justify content
+        if (elementSelected.previousElementSibling) {
+          elementSelected.previousElementSibling.style.backgroundColor = ''; // Reset background
+          elementSelected.previousElementSibling.style.color = '#626C7F'; // Reset color
+        }
+      }
+    }
     if(removeSvg){
       removeSvg.remove();
     }
@@ -227,20 +246,57 @@ const btnNextQuestion = () =>{
     nextAnswer.style = 'display:none;'
   });
   }else{
-    window.location.replace("/quizCompleted.html");
-    console.log('DONE')
+    submitAnswer.style = 'display:none;'
+    nextAnswer.style = 'display:none;'
+    const button = document.createElement('button');
+    button.setAttribute('class','btn');
+    button.setAttribute('id', 'checkScore');
+    button.innerHTML = 'Score';
+    multChoice.appendChild(button);
+    const btnScore = document.querySelector('#checkScore');
+    btnScore.addEventListener('click', (evt) =>{
+      window.location.replace("/quizCompleted.html")
+    })
   }
  
 }
+
 function getCount() {
   return count;
 }
 
+const quizCompleted = () =>{
+  
+    // Reset the title display and icon
+   
+    titleDisplay.innerHTML = '';
+    iconSubject.innerHTML = ''; // Clear any existing icons
+    correctAnswer = null;
+  
+    for(items of Object.entries(data)){
+      for(let i = 0; i < 4; i++){
+        if(items[1][i].title === selectedSubject){
+          titleDisplay.innerHTML = items[1][i].title
+          const img = document.createElement('img')
+          img.src = `${items[1][i].icon}`
+          img.style = 'width:56px; heigth:56px;'
+          iconQuizCompleted.prepend(img)
+        }
+      }
+    }
+  const totalCorrect = localStorage.getItem('totalCorrect');
+  totalScore.innerHTML = totalCorrect;
+}
 
-// when click on next question have to change the question and optionsok
-// Update Question 1 of 10 based in wich question.ok
+if(totalScore){
+  quizCompleted()
+}
 
 
-// Space on question range ok
-
-// create a score page//
+// remove the button ok
+// call the function quizcompleted ok
+// remove the error on welcome page
+// test all functionalities until this part, ok
+// create a variable to sum the right answers ok
+// print this variable ok
+//
