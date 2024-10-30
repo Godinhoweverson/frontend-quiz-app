@@ -10,7 +10,8 @@ const nextAnswer = document.querySelector('#next-answer');
 const scorebtn = document.querySelector('#score-btn');
 const multChoice = document.querySelector('#mult-choice');
 const totalScore = document.querySelector('.total-score');
-const iconQuizCompleted = document.querySelector('.icon');
+const iconQuizCompleted = document.querySelector('.subject');
+
 let correctAnswer;
 let selectedAnswer = null; 
 let elementSelected = null;
@@ -47,11 +48,12 @@ const btnValue = () =>{
 }
 btnValue()
 
-// Get the Subject selected from localStorage
-const selectedSubject = localStorage.getItem('selectedSubject');
-if(selectedSubject){
-  localStorage.removeItem('selectedSubject');
-}
+// // Get the Subject selected from localStorage
+// const selectedSubject = localStorage.getItem('selectedSubject');
+// console.log(selectedSubject)
+// if(selectedSubject){
+//   localStorage.removeItem('selectedSubject');
+// }
    
 // . Get the data from Json 
 let data;
@@ -60,31 +62,37 @@ fetch('./data.json')
   .then((json) => {
     data = json;
     quizzes()
-    quizCompleted(icon)
+    if(totalScore){
+      quizCompleted()
+    }
 })
 .catch((error) => console.error('Error fetching data:', error));
 
 const quizzes = () =>{
+  const selectedSubject = localStorage.getItem('selectedSubject');
+
   // Reset the title display and icon
  
   titleDisplay.innerHTML = '';
   iconSubject.innerHTML = ''; // Clear any existing icons
   correctAnswer = null;
-
-  for(items of Object.entries(data)){
-    for(let i = 0; i < 4; i++){
-      if(items[1][i].title === selectedSubject){
-        titleDisplay.innerHTML = items[1][i].title
-        const img = document.createElement('img')
-        img.src = `${items[1][i].icon}`
-        img.style = 'width:56px; heigth:56px;'
-        iconSubject.prepend(img)
-        displayQuestions(items[1][i].questions[getCount()]);
-        correctAnswer = items[1][i].questions[getCount()];
+  if(!totalScore){
+    for(items of Object.entries(data)){
+      for(let i = 0; i < 4; i++){
+        if(items[1][i].title === selectedSubject){
+          titleDisplay.innerHTML = items[1][i].title
+          const img = document.createElement('img')
+          img.src = `${items[1][i].icon}`
+          img.style = 'width:56px; heigth:56px;'
+          iconSubject.prepend(img)
+          displayQuestions(items[1][i].questions[getCount()]);
+          correctAnswer = items[1][i].questions[getCount()];
+        }
       }
     }
   }
 }
+
 
 const displayQuestions = (questions) => {
   questionsHeanding.innerHTML = questions.question
@@ -266,30 +274,32 @@ function getCount() {
 }
 
 const quizCompleted = () =>{
-  
-    // Reset the title display and icon
+
+  const selectedSubject = localStorage.getItem('selectedSubject');
+  // Reset the title display and icon
+ 
+  titleDisplay.innerHTML = '';
+  iconSubject.innerHTML = ''; // Clear any existing icons
+  correctAnswer = null;
+  console.log(data);
+  for(items of Object.entries(data)){
+    for(let i = 0; i < 4; i++){
    
-    titleDisplay.innerHTML = '';
-    iconSubject.innerHTML = ''; // Clear any existing icons
-    correctAnswer = null;
-  
-    for(items of Object.entries(data)){
-      for(let i = 0; i < 4; i++){
-        if(items[1][i].title === selectedSubject){
-          titleDisplay.innerHTML = items[1][i].title
-          const img = document.createElement('img')
-          img.src = `${items[1][i].icon}`
-          img.style = 'width:56px; heigth:56px;'
-          iconQuizCompleted.prepend(img)
-        }
+      if(items[1][i].title === selectedSubject){
+        titleDisplay.innerHTML = items[1][i].title;
+        const img = document.createElement('img');
+        img.src = `${items[1][i].icon}`;
+        img.style = 'width:40px; heigth:40px;';
+        iconQuizCompleted.prepend(img);
+        const div = document.createElement('div');
+        div.style = 'padding: 10px 0px 0px 24px;'
+        div.innerHTML = items[1][i].title;
+        iconQuizCompleted.appendChild(div)
       }
     }
+  } 
   const totalCorrect = localStorage.getItem('totalCorrect');
   totalScore.innerHTML = totalCorrect;
-}
-
-if(totalScore){
-  quizCompleted()
 }
 
 
