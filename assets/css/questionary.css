@@ -43,7 +43,7 @@ main{
     align-items: center;
 }
 
-.question-type p{
+.subjectTitle{
   font-size: 28px;
   line-height: 100%;
   margin-left: 54px;

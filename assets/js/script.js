@@ -1,5 +1,5 @@
 const pickSubjectBtn = document.querySelectorAll('.pick a');
-const titleDisplay = document.querySelector('.question-type p');
+const titleDisplayQuizCompleted = document.querySelector('.question-type-completed');
 const iconSubject = document.querySelector('.question-type');
 const questionNumber = document.querySelector('.questionNumber');
 const questionsHeanding = document.querySelector('.questions h1');
@@ -11,6 +11,19 @@ const scorebtn = document.querySelector('#score-btn');
 const multChoice = document.querySelector('#mult-choice');
 const totalScore = document.querySelector('.total-score');
 const iconQuizCompleted = document.querySelector('.subject');
+const playAgainBtn = document.querySelector('#play-again');
+
+const myCheckBox = document.querySelector('#myCheckBox');
+const body = document.querySelector('body');
+
+myCheckBox.addEventListener('change', () => {
+  if(myCheckBox.checked){
+    body.backgroundImage = '<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="960" fill="none" viewBox="0 0 1440 960"><circle cx="-50.5" cy="75.5" r="416.5" stroke="#2D3949" stroke-width="144"/><circle cx="1388.5" cy="840.5" r="416.5" stroke="#2D3949" stroke-width="144"/></svg>'
+  }else{
+    console.log('NO')
+  }
+})
+
 
 let correctAnswer;
 let selectedAnswer = null; 
@@ -47,22 +60,16 @@ const btnValue = () =>{
   })
 }
 btnValue()
-
-// // Get the Subject selected from localStorage
-// const selectedSubject = localStorage.getItem('selectedSubject');
-// console.log(selectedSubject)
-// if(selectedSubject){
-//   localStorage.removeItem('selectedSubject');
-// }
-   
+ 
 // . Get the data from Json 
 let data;
 fetch('./data.json')
   .then((res) => res.json())
   .then((json) => {
     data = json;
-    quizzes()
-    if(totalScore){
+    if(!totalScore){
+      quizzes()
+    }else{
       quizCompleted()
     }
 })
@@ -70,17 +77,20 @@ fetch('./data.json')
 
 const quizzes = () =>{
   const selectedSubject = localStorage.getItem('selectedSubject');
-
-  // Reset the title display and icon
  
-  titleDisplay.innerHTML = '';
+  // Reset the title display and icon
   iconSubject.innerHTML = ''; // Clear any existing icons
   correctAnswer = null;
   if(!totalScore){
     for(items of Object.entries(data)){
       for(let i = 0; i < 4; i++){
         if(items[1][i].title === selectedSubject){
-          titleDisplay.innerHTML = items[1][i].title
+
+          const div = document.createElement('div');
+          div.setAttribute('class', 'subjectTitle');
+          div.innerHTML = items[1][i].title;
+          iconSubject.appendChild(div)
+      
           const img = document.createElement('img')
           img.src = `${items[1][i].icon}`
           img.style = 'width:56px; heigth:56px;'
@@ -223,7 +233,9 @@ const answerIsCorrect = (correctAnswer, selectedAnswer, elementSelected) => {
     btnNextQuestion()
 
     // The function to incremment the count variable to use on the logic to go two next questio
-    increementCount() 
+    increementCount()
+  
+    localStorage.setItem('totalCorrect', correctAnswersCount);
   }
  }
 
@@ -275,33 +287,52 @@ function getCount() {
 
 const quizCompleted = () =>{
 
-  const selectedSubject = localStorage.getItem('selectedSubject');
+  let totalCorrect;
+  let selectedSubject = localStorage.getItem('selectedSubject');
+  
   // Reset the title display and icon
- 
-  titleDisplay.innerHTML = '';
-  iconSubject.innerHTML = ''; // Clear any existing icons
-  correctAnswer = null;
-  console.log(data);
+  titleDisplayQuizCompleted.innerHTML = '';
+  iconQuizCompleted.innerHTML = '';
+  totalCorrect = '';
   for(items of Object.entries(data)){
     for(let i = 0; i < 4; i++){
-   
       if(items[1][i].title === selectedSubject){
-        titleDisplay.innerHTML = items[1][i].title;
+
+        const imgTitle = document.createElement('img');
+        imgTitle.src = `${items[1][i].icon}`;
+        imgTitle.style = 'width:40px; heigth:40px;';
+        titleDisplayQuizCompleted.prepend(imgTitle);
+
+        const divTitle = document.createElement('div');
+        divTitle.setAttribute('class', 'subjectTitle');
+        divTitle.innerHTML = items[1][i].title;
+        titleDisplayQuizCompleted.appendChild(divTitle);
+   
         const img = document.createElement('img');
         img.src = `${items[1][i].icon}`;
         img.style = 'width:40px; heigth:40px;';
         iconQuizCompleted.prepend(img);
+
         const div = document.createElement('div');
-        div.style = 'padding: 10px 0px 0px 24px;'
+        div.setAttribute('class', 'subjectTitle');
         div.innerHTML = items[1][i].title;
         iconQuizCompleted.appendChild(div)
       }
     }
+   
   } 
-  const totalCorrect = localStorage.getItem('totalCorrect');
+  totalCorrect = localStorage.getItem('totalCorrect');
+  console.log(totalCorrect)
   totalScore.innerHTML = totalCorrect;
+
+  playAgain()
 }
 
+const playAgain = () =>{
+  playAgainBtn.addEventListener('click',() => {
+    window.location.replace("/index.html")      
+  });
+};
 
 // remove the button ok
 // call the function quizcompleted ok
@@ -309,4 +340,19 @@ const quizCompleted = () =>{
 // test all functionalities until this part, ok
 // create a variable to sum the right answers ok
 // print this variable ok
-//
+// check why title is not display ok
+// added the style ok
+// test all ok
+// is not displayin the title name on question page ok
+
+// get the play again btn ok
+
+// create a function ok
+
+// addenventListener on play again btn ok
+
+// Test ok
+
+// call index Ok
+
+// reset all values OK
