@@ -1,4 +1,5 @@
 const pickSubjectBtn = document.querySelectorAll('.pick a');
+const picks = document.querySelectorAll('.pick');
 const titleDisplayQuizCompleted = document.querySelector('.question-type-completed');
 const iconSubject = document.querySelector('.question-type');
 const questionNumber = document.querySelector('.questionNumber');
@@ -14,16 +15,81 @@ const iconQuizCompleted = document.querySelector('.subject');
 const playAgainBtn = document.querySelector('#play-again');
 
 const myCheckBox = document.querySelector('#myCheckBox');
+const heading = document.querySelector('h1');
 const body = document.querySelector('body');
+
+
+const applyStyles = () => {
+
+  const screenSize = window.innerWidth;
+  if (screenSize > 800) {
+    console.log('yes')
+    body.style.backgroundImage = `url(assets/images/pattern-background-desktop-dark.svg)`;
+  } else if (screenSize < 800) {
+    body.style.backgroundImage = 'url(assets/images/pattern-background-tablet-dark.svg)';
+    body.style.backgroundSize = '50% 60%';
+  } else {
+    body.style.backgroundImage = 'url(assets/images/pattern-background-mobile-dark.svg)';
+  }
+
+  body.style.backgroundColor = '#313E51';
+  body.style.color = '#fff';
+  heading.style.color = '#fff';
+  picks.forEach(pick =>{
+    pick.style.backgroundColor = '#3B4D66';
+  })
+  pickSubjectBtn.forEach(pick =>{
+    pick.style.color = '#fff';
+  })
+
+  if(btnOptions){
+    btnOptions.forEach(el =>{
+      el.style.backgroundColor = '#3B4D66';
+      el.style.color = '#fff';
+    })
+  }
+}
+
+const unApplyStyles = () => {
+  body.style.backgroundImage = '';
+  body.style.backgroundColor = '';
+  body.style.backgroundSize = '';
+  body.style.color = '';
+  heading.style.color = '';
+  picks.forEach(pick =>{
+    pick.style.backgroundColor = '';
+  })
+  pickSubjectBtn.forEach(pick =>{
+    pick.style.color = '';
+  })
+
+  if(btnOptions){
+    btnOptions.forEach(el =>{
+      el.style.backgroundColor = '';
+      el.style.color = '';
+    })
+  }
+}
 
 myCheckBox.addEventListener('change', () => {
   if(myCheckBox.checked){
-    body.backgroundImage = '<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="960" fill="none" viewBox="0 0 1440 960"><circle cx="-50.5" cy="75.5" r="416.5" stroke="#2D3949" stroke-width="144"/><circle cx="1388.5" cy="840.5" r="416.5" stroke="#2D3949" stroke-width="144"/></svg>'
+    console.log('yes');
+    applyStyles();
+    localStorage.setItem('checked', 'true');
   }else{
     console.log('NO')
+    unApplyStyles();
+    localStorage.setItem('checked', 'false');
   }
-})
+});
 
+window.addEventListener('load', () =>{
+  const isChecked = localStorage.getItem('checked') === 'true';
+  myCheckBox.checked = isChecked;
+  if(isChecked){
+    applyStyles();
+  }
+});
 
 let correctAnswer;
 let selectedAnswer = null; 
