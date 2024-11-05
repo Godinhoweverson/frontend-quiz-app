@@ -22,12 +22,12 @@ const body = document.querySelector('body');
 const applyStyles = () => {
 
   const screenSize = window.innerWidth;
-  if (screenSize > 800) {
+  console.log(screenSize)
+  if (screenSize > 1024) {
     console.log('yes')
     body.style.backgroundImage = `url(assets/images/pattern-background-desktop-dark.svg)`;
-  } else if (screenSize < 800) {
+  } else if (screenSize > 524) {
     body.style.backgroundImage = 'url(assets/images/pattern-background-tablet-dark.svg)';
-    body.style.backgroundSize = '50% 60%';
   } else {
     body.style.backgroundImage = 'url(assets/images/pattern-background-mobile-dark.svg)';
   }
@@ -188,7 +188,7 @@ const getValueBtnOptions = (answer) => {
 
       // RESET ALL VALUES
       answer.forEach((btn) => {
-        btn.parentNode.style = ''; // Reset border
+        btn.parentNode.style.border = ''; // Reset border
         btn.previousElementSibling.style.backgroundColor = ''; // Reset background
         btn.previousElementSibling.style.color = ''; // Reset text color
       });
@@ -197,6 +197,7 @@ const getValueBtnOptions = (answer) => {
       selectedAnswer = el.textContent; // Set the selected answer
 
       // Apply styles to the selected element
+     
       el.parentNode.style.border = '2px solid #A729F5';
       el.previousElementSibling.style.backgroundColor = '#A729F5';
       el.previousElementSibling.style.color = '#fff';
@@ -261,6 +262,15 @@ const answerIsCorrect = (correctAnswer, selectedAnswer, elementSelected) => {
     elementSelected.parentNode.style = 'border: 2px solid #26D782; justify-content:space-between;';
     elementSelected.previousElementSibling.style.backgroundColor = '#26D782';
 
+    //CREATE A COMMENT FOR IT
+
+    const isChecked = localStorage.getItem('checked') === 'true';
+    if(isChecked){
+      elementSelected.parentNode.style.backgroundColor = '#3B4D66';
+      elementSelected.parentNode.style.color = '#fff';
+    }
+    ////////////////////////////////////////////////////////////////
+   
     const div = document.createElement('div');
     div.id = 'removeSvg';
     div.style = 'margin-right:20px'
@@ -284,6 +294,11 @@ const answerIsCorrect = (correctAnswer, selectedAnswer, elementSelected) => {
      // INCORRECT ANSWER
     elementSelected.parentNode.style = 'border: 2px solid #EE5454; justify-content:space-between;';
     elementSelected.previousElementSibling.style.backgroundColor = '#EE5454';
+    const isChecked = localStorage.getItem('checked') === 'true';
+    if(isChecked){
+      elementSelected.parentNode.style.backgroundColor = '#3B4D66';
+      elementSelected.parentNode.style.color = '#fff';
+    }
     const div = document.createElement('div');
     div.id = 'removeSvg';
     div.style = 'margin-right:20px'
