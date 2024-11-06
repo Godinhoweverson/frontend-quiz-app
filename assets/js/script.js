@@ -13,18 +13,27 @@ const multChoice = document.querySelector('#mult-choice');
 const totalScore = document.querySelector('.total-score');
 const iconQuizCompleted = document.querySelector('.subject');
 const playAgainBtn = document.querySelector('#play-again');
+const rScore = document.querySelector('#r-score');
 
 const myCheckBox = document.querySelector('#myCheckBox');
 const heading = document.querySelector('h1');
 const body = document.querySelector('body');
 
+let correctAnswer;
+let selectedAnswer = null; 
+let elementSelected = null;
+let count = 0;
+let correctAnswersCount  = 0;
+let data;
 
+// Theme swicth DARK OR LIGTH
+
+// Applyu the dark theme
 const applyStyles = () => {
 
   const screenSize = window.innerWidth;
-  console.log(screenSize)
+
   if (screenSize > 1024) {
-    console.log('yes')
     body.style.backgroundImage = `url(assets/images/pattern-background-desktop-dark.svg)`;
   } else if (screenSize > 524) {
     body.style.backgroundImage = 'url(assets/images/pattern-background-tablet-dark.svg)';
@@ -48,8 +57,12 @@ const applyStyles = () => {
       el.style.color = '#fff';
     })
   }
+  if(rScore){
+    rScore.style.backgroundColor ='#3B4D66';
+  }
 }
 
+// Remove the DARK theme
 const unApplyStyles = () => {
   body.style.backgroundImage = '';
   body.style.backgroundColor = '';
@@ -69,20 +82,23 @@ const unApplyStyles = () => {
       el.style.color = '';
     })
   }
+  if(rScore){
+    rScore.style.backgroundColor = '#fff';
+  }
 }
 
+// Get the value from toggle btn and set on localStorage
 myCheckBox.addEventListener('change', () => {
   if(myCheckBox.checked){
-    console.log('yes');
     applyStyles();
     localStorage.setItem('checked', 'true');
   }else{
-    console.log('NO')
     unApplyStyles();
     localStorage.setItem('checked', 'false');
   }
 });
 
+// Get the value from localStorage and checked if True or false, if is true will call the applyStyles() to apply the dark theme
 window.addEventListener('load', () =>{
   const isChecked = localStorage.getItem('checked') === 'true';
   myCheckBox.checked = isChecked;
@@ -90,12 +106,6 @@ window.addEventListener('load', () =>{
     applyStyles();
   }
 });
-
-let correctAnswer;
-let selectedAnswer = null; 
-let elementSelected = null;
-let count = 0;
-let correctAnswersCount  = 0;
 
 const increementCount =() =>{
   count++
@@ -126,20 +136,27 @@ const btnValue = () =>{
   })
 }
 btnValue()
- 
-// . Get the data from Json 
-let data;
-fetch('./data.json')
-  .then((res) => res.json())
-  .then((json) => {
-    data = json;
-    if(!totalScore){
-      quizzes()
-    }else{
-      quizCompleted()
-    }
-})
-.catch((error) => console.error('Error fetching data:', error));
+
+window.addEventListener('load', () => {
+  // Check if this is the questionary.html or quizCompleted page and ensure that the DOM is ready
+  if (questionNumber || totalScore) { 
+      
+    // . Get the data from Json 
+   
+    fetch('./data.json')
+      .then((res) => res.json())
+      .then((json) => {
+        data = json;
+        if(!totalScore){
+          quizzes()
+        }else{
+          quizCompleted()
+        }
+    })
+    .catch((error) => console.error('Error fetching data:', error));
+  }
+});
+
 
 const quizzes = () =>{
   const selectedSubject = localStorage.getItem('selectedSubject');
@@ -262,14 +279,14 @@ const answerIsCorrect = (correctAnswer, selectedAnswer, elementSelected) => {
     elementSelected.parentNode.style = 'border: 2px solid #26D782; justify-content:space-between;';
     elementSelected.previousElementSibling.style.backgroundColor = '#26D782';
 
-    //CREATE A COMMENT FOR IT
-
+    
+    //  // isChecked determines whether the background color is set to dark mode when the theme is applied.
     const isChecked = localStorage.getItem('checked') === 'true';
     if(isChecked){
       elementSelected.parentNode.style.backgroundColor = '#3B4D66';
       elementSelected.parentNode.style.color = '#fff';
     }
-    ////////////////////////////////////////////////////////////////
+    // ////////////////////////////////////////////////////////////////
    
     const div = document.createElement('div');
     div.id = 'removeSvg';
@@ -294,11 +311,14 @@ const answerIsCorrect = (correctAnswer, selectedAnswer, elementSelected) => {
      // INCORRECT ANSWER
     elementSelected.parentNode.style = 'border: 2px solid #EE5454; justify-content:space-between;';
     elementSelected.previousElementSibling.style.backgroundColor = '#EE5454';
+
+    // isChecked determines whether the background color is set to dark mode when the theme is applied.
     const isChecked = localStorage.getItem('checked') === 'true';
     if(isChecked){
       elementSelected.parentNode.style.backgroundColor = '#3B4D66';
       elementSelected.parentNode.style.color = '#fff';
     }
+    // ///////////////////////////////////////////////////////////////////////////////////////////
     const div = document.createElement('div');
     div.id = 'removeSvg';
     div.style = 'margin-right:20px'
@@ -400,10 +420,9 @@ const quizCompleted = () =>{
         iconQuizCompleted.appendChild(div)
       }
     }
-   
-  } 
+  }
+
   totalCorrect = localStorage.getItem('totalCorrect');
-  console.log(totalCorrect)
   totalScore.innerHTML = totalCorrect;
 
   playAgain()
@@ -414,26 +433,3 @@ const playAgain = () =>{
     window.location.replace("/index.html")      
   });
 };
-
-// remove the button ok
-// call the function quizcompleted ok
-// remove the error on welcome page
-// test all functionalities until this part, ok
-// create a variable to sum the right answers ok
-// print this variable ok
-// check why title is not display ok
-// added the style ok
-// test all ok
-// is not displayin the title name on question page ok
-
-// get the play again btn ok
-
-// create a function ok
-
-// addenventListener on play again btn ok
-
-// Test ok
-
-// call index Ok
-
-// reset all values OK
