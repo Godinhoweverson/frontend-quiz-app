@@ -375,8 +375,8 @@ const btnNextQuestion = () =>{
     button.innerHTML = 'Score';
     multChoice.appendChild(button);
     const btnScore = document.querySelector('#checkScore');
-    btnScore.addEventListener('click', (evt) =>{
-      window.location.replace("/quizCompleted.html")
+    btnScore.addEventListener('click', () =>{
+      window.location.replace("quizCompleted.html")
     })
   }
  
