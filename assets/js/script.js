@@ -197,11 +197,12 @@ const displayQuestions = (questions) => {
 
 // Get value from Answer selected
 const getValueBtnOptions = (answer) => {
+
   // RESET ALL VALUES
   selectedAnswer = '';
   elementSelected = '';
   answer.forEach(el => {
-    el.addEventListener('click', () => {
+    el.parentNode.addEventListener('click', () => {
 
       // RESET ALL VALUES
       answer.forEach((btn) => {
